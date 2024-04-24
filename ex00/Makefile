@@ -1,4 +1,4 @@
-OBJS = main.cpp Bureaucrat.cpp
+OBJS = main.cpp ScalarConverter.cpp
 
 CC = c++
 
