@@ -6,7 +6,7 @@
 /*   By: jmigoya- <jmigoya-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:51:25 by jmigoya-          #+#    #+#             */
-/*   Updated: 2024/04/24 14:41:39 by jmigoya-         ###   ########.fr       */
+/*   Updated: 2024/04/28 15:57:57 by jmigoya-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 int	main(void)
 {
-	ScalarConverter::convert("361.123456789");
+	ScalarConverter::convert("12.21f");
 	return 0;
 }
