@@ -6,7 +6,7 @@
 /*   By: jmigoya- <jmigoya-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:51:44 by jmigoya-          #+#    #+#             */
-/*   Updated: 2024/04/28 15:57:38 by jmigoya-         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:34:46 by jmigoya-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,45 +14,54 @@
 
 void ScalarConverter::convert(std::string str)
 {
-	switch (_getType(str))
+	switch (_type)
 	{
-	case CHAR:
-		std::cout << "char" << std::endl;
+	case CHAR: {
+		std::cout << "Inputed literal is type character." << std::endl << std::endl;
+		_asChar = _toChar(str);
 		break;
-	case INT:
-		std::cout << "int" << std::endl;
+	}
+	case INT: {
+		std::cout << "Inputed literal is type integer." << std::endl << std::endl;
+		_asInt = _toInt(str);
 		break;
-	case FLOAT:
-		std::cout << "float" << std::endl;
+	}
+	case FLOAT: {
+		std::cout << "Inputed literal is type float." << std::endl << std::endl;
+		_asFloat = _toFloat(str);
 		break;
-	case DOUBLE:
-		std::cout << "double" << std::endl;
+	}
+	case DOUBLE: {
+		std::cout << "Inputed literal is type double." << std::endl << std::endl;
+		_asDouble = _toDouble(str);
 		break;
-	case UNKNOWN:
-		std::cout << "unknown" << std::endl;
+	}
+	case UNKNOWN: {
+		std::cout << "Inputed literal is type unknown." << std::endl << std::endl;
 		break;
+	}
 	}
 }
 
-e_type ScalarConverter::_getType(std::string str)
+void ScalarConverter::_getType(std::string str)
 {
 	if (_isChar(str))
 	{
-		return CHAR;
+		_type = CHAR;
 	}
 	else if (_isInt(str))
 	{
-		return INT;
+		_type = INT;
 	}
 	else if (_isFloat(str))
 	{
-		return FLOAT;
+		_type = FLOAT;
 	}
 	else if (_isDouble(str))
 	{
-		return DOUBLE;
+		_type = DOUBLE;
 	}
-	return UNKNOWN;
+	_type = UNKNOWN;
 }
 
 bool ScalarConverter::_isChar(std::string str)
@@ -99,4 +108,24 @@ bool ScalarConverter::_isDouble(std::string str)
 		if (std::isdigit(*it) == 0 && *it != '.')
 			return false;
 	return true;
+}
+
+char ScalarConverter::_toChar(std::string str)
+{
+	return str[0];
+}
+
+int ScalarConverter::_toInt(std::string str)
+{
+	return std::atoi(str.c_str());
+}
+
+float ScalarConverter::_toFloat(std::string str)
+{
+	return std::atof(str.c_str());
+}
+
+double ScalarConverter::_toDouble(std::string str)
+{
+	return std::atof(str.c_str());
 }
