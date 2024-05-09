@@ -6,7 +6,7 @@
 /*   By: jmigoya- <jmigoya-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:51:44 by jmigoya-          #+#    #+#             */
-/*   Updated: 2024/05/08 16:47:38 by jmigoya-         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:26:04 by jmigoya-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static bool isChar(std::string str)
 static bool isInt(std::string str)
 {
 	for (std::string::iterator it = str.begin(); it != str.end(); ++it)
-		if (std::isdigit(*it) == 0)
+		if (std::isdigit(*it) == 0 && (it != str.begin() && *it != '-'))
 			return false;
 	return true;
 }
@@ -45,7 +45,8 @@ static bool isFloat(std::string str)
 		return false;
 
 	for (std::string::iterator it = str.begin(); it != str.end(); ++it)
-		if (std::isdigit(*it) == 0 && *it != '.' && *it != 'f')
+		if (std::isdigit(*it) == 0 && *it != '.' && *it != 'f' &&
+			(it != str.begin() && *it != '-'))
 			return false;
 	return true;
 }
@@ -61,14 +62,15 @@ static bool isDouble(std::string str)
 		return false;
 
 	for (std::string::iterator it = str.begin(); it != str.end(); ++it)
-		if (std::isdigit(*it) == 0 && *it != '.')
+		if (std::isdigit(*it) == 0 && *it != '.' &&
+			(it != str.begin() && *it != '-'))
 			return false;
 	return true;
 }
 
 static int _getType(std::string str)
 {
-	if (str.length() == 0 || str.length() > 6)
+	if (str.length() == 0 || (str[0] != '-' && str.length() > 6) || str.length() > 7)
 		return TOO_LARGE;
 	else if (isChar(str))
 		return CHAR;
@@ -81,11 +83,11 @@ static int _getType(std::string str)
 	return UNKNOWN;
 }
 
-// static bool isPseudoLiteral(const std::string &literal)
-// {
-// 	return (literal == "-inff" || literal == "+inff" || literal == "nanf" ||
-// 			literal == "-inf" || literal == "+inf" || literal == "nan");
-// }
+static bool isPseudoLiteral(const std::string &literal)
+{
+	return (literal == "-inff" || literal == "+inff" || literal == "nanf" ||
+			literal == "-inf" || literal == "+inf" || literal == "nan");
+}
 
 static int _stoi(const std::string &str)
 {
@@ -124,6 +126,14 @@ static void handleInt(int nbr)
 	std::cout << "double: " << static_cast<double>(nbr) << ".0" << std::endl;
 }
 
+static void handlePseudoFloat(std::string str)
+{
+	std::cout << "char: impossible" << std::endl;
+	std::cout << "int: impossible" << std::endl;
+	std::cout << "float: " << str << std::endl;
+	std::cout << "double: " << str.substr(0, str.length() - 1) << std::endl;
+}
+
 static void handleFLoat(float nbr)
 {
 	if (isprint(nbr))
@@ -154,6 +164,14 @@ static void handleDouble(float nbr)
 	std::cout.precision(std::numeric_limits<double>::digits10 + 1);
 }
 
+static void handlePseudoDouble(std::string str)
+{
+	std::cout << "char: impossible" << std::endl;
+	std::cout << "int: impossible" << std::endl;
+	std::cout << "float: " << str + 'f' << std::endl;
+	std::cout << "double: " << str << std::endl;
+}
+
 void ScalarConverter::convert(std::string str)
 {
 	switch (_getType(str))
@@ -167,11 +185,25 @@ void ScalarConverter::convert(std::string str)
 		break;
 	}
 	case FLOAT: {
-		handleFLoat(_stof(str));
+		if (isPseudoLiteral(str) == true)
+		{
+			handlePseudoFloat(str);
+		}
+		else
+		{
+			handleFLoat(_stof(str));
+		}
 		break;
 	}
 	case DOUBLE: {
-		handleDouble(_stof(str));
+		if (isPseudoLiteral(str) == true)
+		{
+			handlePseudoDouble(str);
+		}
+		else
+		{
+			handleDouble(_stof(str));
+		}
 		break;
 	}
 	case TOO_LARGE: {
