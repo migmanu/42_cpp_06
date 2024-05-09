@@ -6,7 +6,7 @@
 /*   By: jmigoya- <jmigoya-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:51:44 by jmigoya-          #+#    #+#             */
-/*   Updated: 2024/05/09 12:26:04 by jmigoya-         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:28:24 by jmigoya-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static bool isDouble(std::string str)
 
 static int _getType(std::string str)
 {
-	if (str.length() == 0 || (str[0] != '-' && str.length() > 6) || str.length() > 7)
+	if ((str[0] != '-' && str.length() > 6) || str.length() > 7)
 		return TOO_LARGE;
 	else if (isChar(str))
 		return CHAR;
