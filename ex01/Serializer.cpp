@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Data.hpp                                           :+:      :+:    :+:   */
+/*   Serializer.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmigoya- <jmigoya-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/10 16:42:57 by jmigoya-          #+#    #+#             */
-/*   Updated: 2024/05/14 16:49:54 by jmigoya-         ###   ########.fr       */
+/*   Created: 2024/05/14 16:26:12 by jmigoya-          #+#    #+#             */
+/*   Updated: 2024/05/14 16:49:47 by jmigoya-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef Data_HPP
-#define Data_HPP
+#include "Serializer.hpp"
 
-#include <stdint.h>
-#include <string>
-
-class Data
+uintptr_t Serializer::serialize(Data *ptr)
 {
-  public:
-	Data(void);
-	Data(const Data &src);
-	~Data(void);
+	return reinterpret_cast<uintptr_t>(ptr);
+}
 
-	Data &operator=(const Data &rhs);
-	std::string type;
-	int value;
-};
-
-#endif // !Data_HPP
+Data *Serializer::deserialize(uintptr_t raw)
+{
+	return reinterpret_cast<Data *>(raw);
+}

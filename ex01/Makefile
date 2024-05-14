@@ -1,4 +1,4 @@
-OBJS = main.cpp
+OBJS = main.cpp Data.cpp Serializer.cpp
 
 CC = c++
 
