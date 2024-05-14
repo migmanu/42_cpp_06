@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   A.hpp                                              :+:      :+:    :+:   */
+/*   A.cpp                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmigoya- <jmigoya-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/14 16:56:40 by jmigoya-          #+#    #+#             */
-/*   Updated: 2024/05/14 18:22:22 by jmigoya-         ###   ########.fr       */
+/*   Created: 2024/05/14 18:27:12 by jmigoya-          #+#    #+#             */
+/*   Updated: 2024/05/14 18:27:20 by jmigoya-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef A_HPP
-#define A_HPP
+#include "A.hpp"
 
-#include "Base.hpp"
-
-class A : public Base
+A::A(void)
 {
-  public:
-	A(void);
-	virtual ~A(void);
-};
+	return;
+}
 
-#endif // !A_HPP
+A::~A(void)
+{
+	return;
+}

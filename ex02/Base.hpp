@@ -6,7 +6,7 @@
 /*   By: jmigoya- <jmigoya-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:55:17 by jmigoya-          #+#    #+#             */
-/*   Updated: 2024/05/14 16:56:09 by jmigoya-         ###   ########.fr       */
+/*   Updated: 2024/05/14 18:24:53 by jmigoya-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 class Base
 {
   public:
-	~Base(void);
+	virtual ~Base(void);
 };
 
 #endif // !Base_HPP
