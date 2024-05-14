@@ -1,4 +1,4 @@
-OBJS = main.cpp Bureaucrat.cpp
+OBJS = main.cpp Base.cpp A.cpp B.cpp C.cpp
 
 CC = c++
 
