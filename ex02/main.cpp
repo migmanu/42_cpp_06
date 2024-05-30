@@ -6,7 +6,7 @@
 /*   By: jmigoya- <jmigoya-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:55:13 by jmigoya-          #+#    #+#             */
-/*   Updated: 2024/05/14 18:53:56 by jmigoya-         ###   ########.fr       */
+/*   Updated: 2024/05/30 20:24:58 by jmigoya-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 #include "C.hpp"
 #include <cstdlib>
 #include <ctime>
-#include <exception>
 #include <iostream>
+#include <typeinfo>
 
 Base *generate(void)
 {
@@ -42,6 +42,11 @@ Base *generate(void)
 
 void identify(Base *p)
 {
+	if (!p)
+	{
+		std::cout << "NULL" << std::endl;
+		return;
+	}
 	A *a = dynamic_cast<A *>(p);
 	B *b = dynamic_cast<B *>(p);
 	C *c = dynamic_cast<C *>(p);
@@ -62,8 +67,9 @@ void identify(Base &p)
 		(void)a;
 		return;
 	}
-	catch (std::exception &e)
+	catch (std::bad_cast &e)
 	{
+		std::cout << "For type A " << e.what() << std::endl;
 	}
 	try
 	{
@@ -72,8 +78,9 @@ void identify(Base &p)
 		(void)b;
 		return;
 	}
-	catch (std::exception &e)
+	catch (std::bad_cast &e)
 	{
+		std::cout << "For type B " << e.what() << std::endl;
 	}
 	try
 	{
@@ -82,8 +89,9 @@ void identify(Base &p)
 		(void)c;
 		return;
 	}
-	catch (std::exception &e)
+	catch (std::bad_cast &e)
 	{
+		std::cout << "For type C " << e.what() << std::endl;
 	}
 }
 
