@@ -6,7 +6,7 @@
 /*   By: jmigoya- <jmigoya-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:51:44 by jmigoya-          #+#    #+#             */
-/*   Updated: 2024/05/09 12:28:24 by jmigoya-         ###   ########.fr       */
+/*   Updated: 2024/05/30 20:00:30 by jmigoya-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <limits>
 #include <sstream>
 #include <string>
+#include <variant>
 
 static bool isChar(std::string str)
 {
@@ -70,7 +71,7 @@ static bool isDouble(std::string str)
 
 static int _getType(std::string str)
 {
-	if ((str[0] != '-' && str.length() > 6) || str.length() > 7)
+	if (str.find('.') == std::string::npos && str.length() > 7)
 		return TOO_LARGE;
 	else if (isChar(str))
 		return CHAR;
@@ -134,31 +135,31 @@ static void handlePseudoFloat(std::string str)
 	std::cout << "double: " << str.substr(0, str.length() - 1) << std::endl;
 }
 
-static void handleFLoat(float nbr)
+static void handleFLoat(float nbr, int p)
 {
 	if (isprint(nbr))
 		std::cout << "char: '" << static_cast<char>(nbr) << "'" << std::endl;
 	else
 		std::cout << "char: Non displayable" << std::endl;
 	std::cout << "int: " << static_cast<int>(nbr) << std::endl;
-	std::cout << std::fixed << std::setprecision(1) << "float: " << nbr << "f"
+	std::cout << std::fixed << std::setprecision(9 - p) << "float: " << nbr << "f"
 			  << std::endl;
-	std::cout << std::fixed << std::setprecision(1)
+	std::cout << std::fixed << std::setprecision(17 - p)
 			  << "double: " << static_cast<double>(nbr) << std::endl;
 	std::cout.unsetf(std::ios_base::fixed);
 	std::cout.precision(std::numeric_limits<double>::digits10 + 1);
 }
 
-static void handleDouble(float nbr)
+static void handleDouble(float nbr, int p)
 {
 	if (isprint(nbr))
 		std::cout << "char: '" << static_cast<char>(nbr) << "'" << std::endl;
 	else
 		std::cout << "char: Non displayable" << std::endl;
 	std::cout << "int: " << static_cast<int>(nbr) << std::endl;
-	std::cout << std::fixed << std::setprecision(1)
+	std::cout << std::fixed << std::setprecision(9 - p)
 			  << "float: " << static_cast<float>(nbr) << "f" << std::endl;
-	std::cout << std::fixed << std::setprecision(1) << "double: " << nbr
+	std::cout << std::fixed << std::setprecision(17 - p) << "double: " << nbr
 			  << std::endl;
 	std::cout.unsetf(std::ios_base::fixed);
 	std::cout.precision(std::numeric_limits<double>::digits10 + 1);
@@ -170,6 +171,12 @@ static void handlePseudoDouble(std::string str)
 	std::cout << "int: impossible" << std::endl;
 	std::cout << "float: " << str + 'f' << std::endl;
 	std::cout << "double: " << str << std::endl;
+}
+
+int getPrecision(std::string str)
+{
+	int p = str.find('.');
+	return p;
 }
 
 void ScalarConverter::convert(std::string str)
@@ -191,7 +198,7 @@ void ScalarConverter::convert(std::string str)
 		}
 		else
 		{
-			handleFLoat(_stof(str));
+			handleFLoat(_stof(str), getPrecision(str));
 		}
 		break;
 	}
@@ -202,7 +209,7 @@ void ScalarConverter::convert(std::string str)
 		}
 		else
 		{
-			handleDouble(_stof(str));
+			handleDouble(_stof(str), getPrecision(str));
 		}
 		break;
 	}
