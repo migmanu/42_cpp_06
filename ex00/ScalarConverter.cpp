@@ -6,7 +6,7 @@
 /*   By: jmigoya- <jmigoya-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:51:44 by jmigoya-          #+#    #+#             */
-/*   Updated: 2024/05/30 20:00:30 by jmigoya-         ###   ########.fr       */
+/*   Updated: 2024/06/06 16:20:21 by jmigoya-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 static bool isChar(std::string str)
 {
-	if (str.length() > 1 || std::isalpha(str[0]) == 0)
+	if (str.length() > 1 || std::isprint(str[0]) == 0)
 		return false;
 	return true;
 }

@@ -6,7 +6,7 @@
 /*   By: jmigoya- <jmigoya-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:51:36 by jmigoya-          #+#    #+#             */
-/*   Updated: 2024/05/08 16:47:11 by jmigoya-         ###   ########.fr       */
+/*   Updated: 2024/06/06 15:38:41 by jmigoya-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,7 @@ class ScalarConverter
 {
   public:
 	static void convert(std::string str);
+
+  private:
+	ScalarConverter(void);
 };
