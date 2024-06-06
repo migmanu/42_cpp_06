@@ -6,7 +6,7 @@
 /*   By: jmigoya- <jmigoya-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:55:13 by jmigoya-          #+#    #+#             */
-/*   Updated: 2024/05/30 20:24:58 by jmigoya-         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:27:34 by jmigoya-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 
 Base *generate(void)
 {
-	std::srand(std::time(0));
 	int r = rand();
 	r = (r % 3) + 1;
 	std::cout << "rand is: " << r << std::endl;
@@ -42,20 +41,17 @@ Base *generate(void)
 
 void identify(Base *p)
 {
-	if (!p)
-	{
-		std::cout << "NULL" << std::endl;
-		return;
-	}
-	A *a = dynamic_cast<A *>(p);
-	B *b = dynamic_cast<B *>(p);
-	C *c = dynamic_cast<C *>(p);
-	if (a)
-		std::cout << "Type is: A" << std::endl;
-	if (b)
-		std::cout << "Type is: B" << std::endl;
-	if (c)
-		std::cout << "Type is: C" << std::endl;
+    if (!p)
+    {
+        std::cout << "NULL" << std::endl;
+        return;
+    }
+    if (dynamic_cast<A *>(p))
+        std::cout << "Type is: A" << std::endl;
+    else if (dynamic_cast<B *>(p))
+        std::cout << "Type is: B" << std::endl;
+    else if (dynamic_cast<C *>(p))
+        std::cout << "Type is: C" << std::endl;
 }
 
 void identify(Base &p)
@@ -97,6 +93,7 @@ void identify(Base &p)
 
 int main(void)
 {
+	std::srand(std::time(0));
 	Base *ptr_test = generate();
 	Base &ref_test = *ptr_test;
 	std::cout << "Pointer test" << std::endl;
