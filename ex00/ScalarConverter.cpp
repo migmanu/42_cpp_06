@@ -6,7 +6,7 @@
 /*   By: jmigoya- <jmigoya-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:51:44 by jmigoya-          #+#    #+#             */
-/*   Updated: 2024/06/06 16:20:21 by jmigoya-         ###   ########.fr       */
+/*   Updated: 2024/06/06 16:24:59 by jmigoya-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 #include <limits>
 #include <sstream>
 #include <string>
-#include <variant>
 
 static bool isChar(std::string str)
 {
