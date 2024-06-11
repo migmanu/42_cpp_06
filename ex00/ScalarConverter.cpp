@@ -6,7 +6,7 @@
 /*   By: jmigoya- <jmigoya-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:51:44 by jmigoya-          #+#    #+#             */
-/*   Updated: 2024/06/06 16:24:59 by jmigoya-         ###   ########.fr       */
+/*   Updated: 2024/06/11 13:23:39 by migmanu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,26 @@
 #include <sstream>
 #include <string>
 
-static bool isChar(std::string str)
+static bool isPrintChar(std::string str)
 {
 	if (str.length() > 1 || std::isprint(str[0]) == 0)
 		return false;
 	return true;
 }
 
-static bool isInt(std::string str)
+static bool isDigit(std::string str)
 {
 	for (std::string::iterator it = str.begin(); it != str.end(); ++it)
-		if (std::isdigit(*it) == 0 && (it != str.begin() && *it != '-'))
+	{
+		if (it == str.begin() && *it == '-')
+			continue;
+		if (std::isdigit(*it) == 0)
 			return false;
+	}
 	return true;
 }
 
-static bool isFloat(std::string str)
+static bool isFloatLiteral(std::string str)
 {
 	if (str.compare("-inff") == 0 || str.compare("+inff") == 0 ||
 		str.compare("nanf") == 0)
@@ -51,7 +55,7 @@ static bool isFloat(std::string str)
 	return true;
 }
 
-static bool isDouble(std::string str)
+static bool isDoubleLiteral(std::string str)
 {
 	if (str.compare("-inf") == 0 || str.compare("+inf") == 0 ||
 		str.compare("nan") == 0)
@@ -70,15 +74,13 @@ static bool isDouble(std::string str)
 
 static int _getType(std::string str)
 {
-	if (str.find('.') == std::string::npos && str.length() > 7)
-		return TOO_LARGE;
-	else if (isChar(str))
+	if (isPrintChar(str))
 		return CHAR;
-	else if (isInt(str))
+	else if (isDigit(str))
 		return INT;
-	else if (isFloat(str))
+	else if (isFloatLiteral(str))
 		return FLOAT;
-	else if (isDouble(str))
+	else if (isDoubleLiteral(str))
 		return DOUBLE;
 	return UNKNOWN;
 }
@@ -117,7 +119,7 @@ static void handleChar(char c)
 
 static void handleInt(int nbr)
 {
-	if (isprint(nbr))
+	if (nbr >= 32 && nbr <= 126)
 		std::cout << "char: '" << static_cast<char>(nbr) << "'" << std::endl;
 	else
 		std::cout << "char: Non displayable" << std::endl;
@@ -134,16 +136,16 @@ static void handlePseudoFloat(std::string str)
 	std::cout << "double: " << str.substr(0, str.length() - 1) << std::endl;
 }
 
-static void handleFLoat(float nbr, int p)
+static void handleFloat(float nbr, int p)
 {
-	if (isprint(nbr))
+	if (nbr >= 32 && nbr <= 126)
 		std::cout << "char: '" << static_cast<char>(nbr) << "'" << std::endl;
 	else
 		std::cout << "char: Non displayable" << std::endl;
 	std::cout << "int: " << static_cast<int>(nbr) << std::endl;
-	std::cout << std::fixed << std::setprecision(9 - p) << "float: " << nbr << "f"
+	std::cout << std::fixed << std::setprecision(p < FLT_PRECISION ? FLT_PRECISION - p : 0) << "float: " << nbr << "f"
 			  << std::endl;
-	std::cout << std::fixed << std::setprecision(17 - p)
+	std::cout << std::fixed << std::setprecision(p < DBL_PRECISION ? DBL_PRECISION - p : 0)
 			  << "double: " << static_cast<double>(nbr) << std::endl;
 	std::cout.unsetf(std::ios_base::fixed);
 	std::cout.precision(std::numeric_limits<double>::digits10 + 1);
@@ -151,14 +153,14 @@ static void handleFLoat(float nbr, int p)
 
 static void handleDouble(float nbr, int p)
 {
-	if (isprint(nbr))
+	if (nbr >= 32 && nbr <= 126)
 		std::cout << "char: '" << static_cast<char>(nbr) << "'" << std::endl;
 	else
 		std::cout << "char: Non displayable" << std::endl;
 	std::cout << "int: " << static_cast<int>(nbr) << std::endl;
-	std::cout << std::fixed << std::setprecision(9 - p)
+	std::cout << std::fixed << std::setprecision(p < FLT_PRECISION ? FLT_PRECISION - p : 0)
 			  << "float: " << static_cast<float>(nbr) << "f" << std::endl;
-	std::cout << std::fixed << std::setprecision(17 - p) << "double: " << nbr
+	std::cout << std::fixed << std::setprecision(p < DBL_PRECISION ? DBL_PRECISION - p : 0) << "double: " << nbr
 			  << std::endl;
 	std::cout.unsetf(std::ios_base::fixed);
 	std::cout.precision(std::numeric_limits<double>::digits10 + 1);
@@ -172,7 +174,7 @@ static void handlePseudoDouble(std::string str)
 	std::cout << "double: " << str << std::endl;
 }
 
-int getPrecision(std::string str)
+int getDecimalPosition(std::string str)
 {
 	int p = str.find('.');
 	return p;
@@ -197,7 +199,7 @@ void ScalarConverter::convert(std::string str)
 		}
 		else
 		{
-			handleFLoat(_stof(str), getPrecision(str));
+			handleFloat(_stof(str), getDecimalPosition(str));
 		}
 		break;
 	}
@@ -208,12 +210,8 @@ void ScalarConverter::convert(std::string str)
 		}
 		else
 		{
-			handleDouble(_stof(str), getPrecision(str));
+			handleDouble(_stof(str), getDecimalPosition(str));
 		}
-		break;
-	}
-	case TOO_LARGE: {
-		std::cout << "Inputed literal is too large." << std::endl << std::endl;
 		break;
 	}
 	case UNKNOWN: {

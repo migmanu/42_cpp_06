@@ -6,11 +6,14 @@
 /*   By: jmigoya- <jmigoya-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:51:36 by jmigoya-          #+#    #+#             */
-/*   Updated: 2024/06/06 15:38:41 by jmigoya-         ###   ########.fr       */
+/*   Updated: 2024/06/11 12:56:19 by migmanu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <string>
+
+#define FLT_PRECISION  8
+#define DBL_PRECISION  16
 
 enum e_type
 {
@@ -18,7 +21,6 @@ enum e_type
 	INT,
 	FLOAT,
 	DOUBLE,
-	TOO_LARGE,
 	UNKNOWN
 };
 
