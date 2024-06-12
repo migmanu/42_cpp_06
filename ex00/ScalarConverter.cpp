@@ -6,7 +6,7 @@
 /*   By: jmigoya- <jmigoya-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:51:44 by jmigoya-          #+#    #+#             */
-/*   Updated: 2024/06/11 13:23:39 by migmanu          ###   ########.fr       */
+/*   Updated: 2024/06/12 16:04:18 by jmigoya-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ static void handleChar(char c)
 
 static void handleInt(int nbr)
 {
-	if (nbr >= 32 && nbr <= 126)
+	if (nbr >= 32 && nbr < 127)
 		std::cout << "char: '" << static_cast<char>(nbr) << "'" << std::endl;
 	else
 		std::cout << "char: Non displayable" << std::endl;
@@ -138,7 +138,7 @@ static void handlePseudoFloat(std::string str)
 
 static void handleFloat(float nbr, int p)
 {
-	if (nbr >= 32 && nbr <= 126)
+	if (nbr >= 32 && nbr < 127)
 		std::cout << "char: '" << static_cast<char>(nbr) << "'" << std::endl;
 	else
 		std::cout << "char: Non displayable" << std::endl;
@@ -153,7 +153,7 @@ static void handleFloat(float nbr, int p)
 
 static void handleDouble(float nbr, int p)
 {
-	if (nbr >= 32 && nbr <= 126)
+	if (nbr >= 32 && nbr < 127)
 		std::cout << "char: '" << static_cast<char>(nbr) << "'" << std::endl;
 	else
 		std::cout << "char: Non displayable" << std::endl;
