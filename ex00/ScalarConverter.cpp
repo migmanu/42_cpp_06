@@ -6,7 +6,7 @@
 /*   By: jmigoya- <jmigoya-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:51:44 by jmigoya-          #+#    #+#             */
-/*   Updated: 2024/06/12 16:04:18 by jmigoya-         ###   ########.fr       */
+/*   Updated: 2024/06/14 15:53:33 by migmanu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 static bool isPrintChar(std::string str)
 {
-	if (str.length() > 1 || std::isprint(str[0]) == 0)
+	if (str.length() > 1 || std::isprint(str[0]) == 0 || std::isdigit(str[0]))
 		return false;
 	return true;
 }

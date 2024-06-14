@@ -6,7 +6,7 @@
 /*   By: jmigoya- <jmigoya-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:55:13 by jmigoya-          #+#    #+#             */
-/*   Updated: 2024/06/06 17:27:34 by jmigoya-         ###   ########.fr       */
+/*   Updated: 2024/06/14 15:54:02 by migmanu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
-#include <typeinfo>
 
 Base *generate(void)
 {
@@ -63,7 +62,7 @@ void identify(Base &p)
 		(void)a;
 		return;
 	}
-	catch (std::bad_cast &e)
+	catch (std::exception &e)
 	{
 		std::cout << "For type A " << e.what() << std::endl;
 	}
@@ -74,7 +73,7 @@ void identify(Base &p)
 		(void)b;
 		return;
 	}
-	catch (std::bad_cast &e)
+	catch (std::exception &e)
 	{
 		std::cout << "For type B " << e.what() << std::endl;
 	}
@@ -85,7 +84,7 @@ void identify(Base &p)
 		(void)c;
 		return;
 	}
-	catch (std::bad_cast &e)
+	catch (std::exception &e)
 	{
 		std::cout << "For type C " << e.what() << std::endl;
 	}
