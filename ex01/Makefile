@@ -1,17 +1,34 @@
-OBJS = main.cpp Data.cpp Serializer.cpp
-
+CFLAGS = -Werror -Wextra -Wall -std=c++98 -g
 CC = c++
+SRCS = main.cpp Data.cpp Serializer.cpp
+OBJS = $(SRCS:.cpp=.o)
+EXEC = exec
 
-COMPILER_FLAGS = -Werror -Wextra -Wall -Wshadow -std=c++98 -g
+# Default rule
+all: $(EXEC)
 
-OBJ_NAME = exec
+# Rule to create the executable
+$(EXEC): $(OBJS)
+	@$(CC) -o $@ $^
 
-$(OBJ_NAME) : $(OBJS)
-	@$(CC) $(OBJS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(OBJ_NAME)
+# Rule to create object files
+%.o: %.cpp
+	@$(CC) $(CFLAGS) -c $< -o $@
 
-clean : 
-	@rm $(OBJ_NAME)
+# Rule to clean object files
+clean:
+	@rm -f $(OBJS)
 
-re : clean $(OBJ_NAME)
+# Rule to clean everything
+fclean: clean
+	@rm -f $(EXEC)
 
-.PHONY : clean
+# Rule to recompile everything
+re: fclean all
+
+# Rule to run program
+run : all
+	./$(EXEC)
+
+# Phony targets
+.PHONY: all clean fclean re run
